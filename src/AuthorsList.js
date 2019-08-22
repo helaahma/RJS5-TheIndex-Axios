@@ -5,7 +5,7 @@ import AuthorCard from "./AuthorCard";
 import SearchBar from "./SearchBar";
 
 function AuthorsList(props) {
-  const authorCards = props.authors.map(author => (
+  const authorCards = props.authorsAPI.map(author => (
     <AuthorCard
       key={author.first_name + author.last_name}
       author={author}

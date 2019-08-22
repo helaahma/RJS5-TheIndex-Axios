@@ -5,7 +5,7 @@ function AuthorCard(props) {
   const authorName = `${author.first_name} ${author.last_name}`;
   return (
     <div className="col-lg-4 col-md-6 col-12">
-      <div className="card" onClick={() => props.selectAuthor(author)}>
+      <div className="card" onClick={() => props.selectAuthor(author.id)}>
         <div className="image">
           <img
             className="card-img-top img-fluid"
