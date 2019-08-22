@@ -12,7 +12,7 @@ class App extends Component {
   state = {
     loading: true,
     currentAuthor: null,
-    filteredAuthors: this.authors,
+    filteredAuthors: [],
     authors: []
   };
 
@@ -21,7 +21,11 @@ class App extends Component {
       let response = await axios.get(
         "https://the-index-api.herokuapp.com/api/authors/"
       );
-      this.setState({ authors: response.data, loading: !this.state.loading });
+      this.setState({
+        authors: response.data,
+        filteredAuthors: response.data,
+        loading: !this.state.loading
+      });
     } catch (error) {
       console.error(error);
     }
@@ -48,14 +52,14 @@ class App extends Component {
 
   filterAuthors = query => {
     query = query.toLowerCase();
-    let filteredAuthors = this.authors.filter(author => {
+    let filteredAuthors = this.state.authors.filter(author => {
       return `${author.first_name} ${author.last_name}`
         .toLowerCase()
         .includes(query);
     });
     this.setState({ filteredAuthors: filteredAuthors });
+    console.log(this.state.filteredAuthors);
   };
-
   getContentView = () => {
     if (this.state.currentAuthor) {
       return <AuthorDetail author={this.state.currentAuthor} />;
@@ -65,7 +69,7 @@ class App extends Component {
           authors={this.state.filteredAuthors}
           selectAuthor={this.selectAuthor}
           filterAuthors={this.filterAuthors}
-          authorsAPI={this.state.authors}
+          authorsAPI={this.state.filteredAuthors}
         />
       );
     } else {
